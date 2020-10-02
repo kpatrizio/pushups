@@ -1,7 +1,7 @@
 ---
 title: "Who Does More Pushups"
-author: "Your Name"
-date: "Fall 2020"
+author: "Kelly Patrizio"  
+date: "October 1, 2020"
 output:
 html_document:
 number_sections: true
@@ -12,15 +12,29 @@ toc: true
 ```{r include=FALSE,echo=FALSE}
 require(tigerstats)
 require(tidyverse)
+data(pushups)
 ```
 
 # Introduction
 
 <!--In this section you explain what you are trying to show. Where did the data come from? What is the research or other question you are trying to answer?!-->
 
+$H_0$ Null Hypothesis is there is no difference in the average number of pushups players can do in two minutes based on the position they play.  
+
+$H_A$ Alternate Hypothesis is that there is a difference difference in the average number of pushups players can do in two minutes based on the position they play.  
+
+ My data is found in a file called pushups.  
+ 
+ I am trying to answer the question of whether there is a differnce in how many pushups a player does based on two categorical levels of position such as Line and Skill.
+
 # Methods
 
-<!--Decide on your methods: use "variable analysis" or other appropriate descriptors. Make sure to choose at least one graphical method and at least one numerical method.!-->
+<!--Decide on your methods: use "variable analysis" or other appropriate descriptors. Make sure to choose at least one graphical method and at least one numerical method.!-->  
+
+Pushups is a numerical variable.    
+Position is a categorical variable.  
+There fore we will load the numerical~cat file to run our graphs in each chunk.      
+
 
 # Results
 
@@ -30,18 +44,48 @@ require(tidyverse)
 
 ### Graphical Descriptive Results
 
-<!--Graphical results here. Make sure to show your code. Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too. Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+<!--Graphical results here. Make sure to show your code. Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too. Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!--> 
+
+```{r}
+boxplot(pushups~position,data=pushups)
+```
+
+Above is a Graphical Box Plot, that shows us, that those who are in the LINE position did between 25 to 30 push-ups while those players in the SKILL position did approximately 50 push ups.  
+
+
+```{r}
+ basicCN <- ggplot(data=pushups,aes(x=pushups, y=position)) 
+
+ basicCN + geom_boxplot()
+```
+
+In the gg plot above we see again that those in the LINE position show 25 to 30 push-ups which is significantly lower than those who are in the SKILL position.  We also can see by this plot that there is no overlap so there has to be a significant difference of the amount of push-ups a player does based on the their position LINE or SKILL.  
+
+
 
 ### Numerical Descriptive Results
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
+```{r}
+favstats(pushups~position,data=pushups)
+```
+  
+In the Chi-r-Square Numerical Chart above, we observe that there is a significant difference in the amount of push-ups a player does based on position of LINE or SKILL.  We can see that all data above, (min, Q1, median, Q3, max, and the mean) all easily show a significant difference.      
+
 ## Inferential Results
 
 <!--State hypothesis clearly. Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc. Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
 
+```{r}
+t.test(pushups~position,data=pushups)
+```
+
+In the Inferential Graph above, we used a t-test because we only had two levels in our  categorical data, position; LINE and SKILL.  The t-test shows us a p-value that equals almost 0 coming in @ 9.421e-06, meaning there is no possible way that there would be "no" difference in the amount of push-ups a player can do based on the position of LINE or SKILL as the Null Hypothesis would suggest.  Therefore, we reject the Null Hypothesis, that there is no difference, in favor of the Alternative Hypothesis, that there is a difference.    
 
 # Discussion and Conclusion
+
+Therefore, we conclude that the question "Is there a difference in the amount of push-ups a player does based on their position level?"  to be that of the Alternative Hypothesis, that there is a difference and we reject the Null Hypothesis.  
 
 <!--Discussion and conclusion here. If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason. Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
 
